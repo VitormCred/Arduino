@@ -1,9 +1,10 @@
-import serial # Serve para acessar Arduino.
+import serial 
+# Serve para acessar Arduino.
 import time
 
 # Inicia a conexão, trocar 'COM' pelo port correto.
-arduino = serial.Serial('COM5', 9600, timeout=2)
-
+arduino = serial.Serial('COM4', 9600, timeout=2)
+texto = ""
 # Deixa o Arduino resetar após enviar o código.
 time.sleep(5)
 
@@ -15,20 +16,32 @@ def enviar_comando(cmd):
 
 # Teste 
 print("Iniciando teste")
-time.sleep(1)
-print(enviar_comando("LED_ON")) # Resposta Esperada: "LED ON"
-time.sleep(5)
-print(enviar_comando("LED_OFF")) # Resposta Esperada: "LED OFF"
-time.sleep(5)
-print(enviar_comando("LED_ON")) # Resposta Esperada: "LED ON"   
-time.sleep(5)
-print(enviar_comando("LED_OFF")) # Resposta Esperada: "LED OFF"
-time.sleep(5)
-while True:
-    texto = input("Favor inserir B para buzzer ou N para não buzzer & S para sair: ")
-    while texto == "b" or texto == "B": # Resposta Esperada: "BUZZER ON"
+#time.sleep(1)
+#print(enviar_comando("LED_ON")) # Resposta Esperada: "LED ON"
+#time.sleep(1)
+#print(enviar_comando("LED_OFF")) # Resposta Esperada: "LED OFF"
+#time.sleep(1)
+#print(enviar_comando("LED_ON")) # Resposta Esperada: "LED ON"   
+#time.sleep(1)
+#print(enviar_comando("LED_OFF")) # Resposta Esperada: "LED OFF"
+#time.sleep(1)
+while texto != "Sair":
+    texto = input("Favor inserir comando: ")
+    if texto == "b" or texto == "B": # Resposta Esperada: "BUZZER ON"
         print(enviar_comando("BUZZER_ON"))
-        texto = input("Favor inserir B para buzzer: ")
+        pass
+    elif texto == "t" or texto == "T": # Resposta Esperada: "Temperatura: X & Humidde do Ar: Y"
+        print(enviar_comando("READ_TEMP")) 
+    elif texto == "L" or texto == "l": # Resposta Eperad: "LED ON" & "LED OFF"
+        print(enviar_comando("LED_ON")) 
+        time.sleep(3)
+        print(enviar_comando("LED_OFF")) 
+        pass
+    elif texto == "Sair":
+        print("Obrigado por utilizar!")
+        break
+    else:
+        pass
 
-# Close port
+# Close port    
 arduino.close()
