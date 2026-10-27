@@ -86,9 +86,9 @@ void loop() {
       digitalWrite(TRIGGER_PIN, LOW);
       duration = pulseIn(ECHO_PIN, HIGH);
       distance = duration * 0.034 / 2;  // compensa pela velocidade do som.
-      lcd.print("Distância: "); 
+      lcd.print("Dist: "); 
       lcd.print(distance);
-      lcd.print(" cm");
+      lcd.print("cm");
       Serial.print("Distância: ");
       Serial.print(distance);
       Serial.println(" cm");
