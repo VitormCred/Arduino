@@ -36,7 +36,9 @@ void loop() {
     int humidity = 0;
     DHT11 dht11(4); // Pino 4.
   if (Serial.available() > 0) {
-      String command = Serial.readStringUntil('\n');
+      String payload = Serial.readStringUntil('\n');
+      int separador = payload.indexOf(':');
+      String command = payload.substring(0, separador);
       command.trim(); // Remove sufixos '\r' ou espaços
 
     if (command == "LED_ON") {
@@ -49,6 +51,12 @@ void loop() {
       digitalWrite(LED_BUILTIN, LOW);
       lcd.print("Led desligado");
       Serial.println("LED OFF");
+    }
+
+    if (command == "DISPLAY_TEXT") {
+      lcd.clear();
+      String txt = payload.substring(separador + 1);
+      lcd.print(txt);
     }
 
     if (command == "BUZZER_ON") {
