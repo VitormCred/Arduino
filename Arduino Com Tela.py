@@ -36,24 +36,24 @@ print("Iniciando teste")
 #time.sleep(1)
 #print(enviar_comando("LED_OFF")) # Resposta esperada: "LED OFF"
 #time.sleep(1)
-while texto != "Sair":
-    texto = input("Favor inserir comando: ")
-    if texto == "b" or texto == "B": # Resposta esperada: "BUZZER ON"
+while texto != "sair":
+    texto = input("Favor inserir comando: ").lower()
+    if texto == "b": # Resposta esperada: "BUZZER ON"
         print(comando("BUZZER_ON"))
         pass
-    elif texto == "t" or texto == "T": # Resposta esperada: "Temperatura: X & Humidde do Ar: Y"
+    elif texto == "t": # Resposta esperada: "Temperatura: X & Humidde do Ar: Y"
         print(comando("READ_TEMP")) 
-    elif texto == "L" or texto == "l": # Resposta esperada: "LED ON" & "LED OFF"
+    elif texto == "l": # Resposta esperada: "LED ON" & "LED OFF"
         print(comando("LED_ON")) 
         time.sleep(2)
         print(comando("LED_OFF")) 
         pass
-    elif texto == "d" or texto == "D": # Resposta esperada: "Distância: X cm"
+    elif texto == "d": # Resposta esperada: "Distância: X cm"
         print(comando("READ_DIST"))
         pass
-    elif texto == "e" or texto == "E":
+    elif texto == "e":
             print(comando("DISPLAY_TEXT")) # Resposta esperada: Exibir o texto digitado no LCD"
-    elif texto == "Sair":
+    elif texto == "sair":
         print("Obrigado por utilizar!")
         break
     else:
