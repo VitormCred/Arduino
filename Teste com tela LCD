@@ -1,0 +1,56 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+const int trigPin = 9;
+const int echoPin = 10;
+
+long duration;
+int distance;
+
+// Set the LCD address to 0x27 (common default; use 0x3F if 0x27 doesn't work)
+// Format: LiquidCrystal_I2C lcd(address, columns, rows)
+LiquidCrystal_I2C lcd(0x27, 16, 2); 
+
+void setup() {
+  lcd.init();          // Initialize the LCD [1.1.4]
+  lcd.backlight();
+  Serial.begin(9600);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);     // Turn on the backlight [1.1.4]
+  
+  // Print a message to the LCD
+  lcd.setCursor(0, 0); // Column 0, Row 0 [1.1.4]
+  lcd.print("Hello, Arduino!");
+  
+  lcd.setCursor(0, 1); // Column 0, Row 1 [1.1.4]
+  lcd.print("SDA & SCL OK!");
+  
+  delay(2000);
+}
+
+void loop() {
+  
+  lcd.clear();
+
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  duration = pulseIn(echoPin, HIGH);
+
+  distance = duration * 0.034 / 2;  // speed of sound compensation
+
+  lcd.print("Distance: ");
+  lcd.print(distance);
+  lcd.print(" cm");
+
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+  
+  delay(2000);
+  // Do nothing here
+}
